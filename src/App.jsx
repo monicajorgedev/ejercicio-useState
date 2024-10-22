@@ -4,16 +4,19 @@ import { useState } from 'react'
 
 // primer ejercicio
 function AppList() {
-    let [name, setName] = useState('Sofia');
-    //const newName = useState('')
+    const [name, setName] = useState('Sofia');
+    
+    const handleChangeName = (teacherName) => {
+      setName(teacherName)
+    }
   
     return (
       <>
        <h2>Teacher Name: {name}</h2>
        <ul>
-        <li><button onClick={()=> setName('Data')}>Data</button></li>
-        <li><button onClick={()=> setName('Reyes')}>Reyes</button></li>
-        <li><button onClick={()=> setName('Yolanda')}>Yolanda</button></li>
+        <li onClick={()=> handleChangeName('Data')}>Data</li>
+        <li onClick={()=> handleChangeName('Reyes')}>Reyes</li>
+        <li onClick={()=> handleChangeName('Yolanda')}>Yolanda</li>
        </ul>
       </>
     )
@@ -23,14 +26,22 @@ function AppList() {
   
   function AppForm () {
     const [name, setName] = useState('Sofia')
-    let [newName, setNewName] = useState('')
+    const [newName, setNewName] = useState('')
     
     const changeName = (e) => {
       e.preventDefault()
-      if(!newName) {
-        return
-      } 
+     //newName ? setName(newName) : null
+      // opción 1
+      //if(!newName) {
+      //   return
+      // } 
+      // setName(newName)
+
+      //opcion2
+      //el trim es para eliminar los espacios
+      if(newName.trim()) {
       setName(newName)
+      setNewName('')}
       setNewName('')
   
     }
@@ -39,7 +50,12 @@ function AppList() {
       <>
       <h2>Teacher Name: {name}</h2>
       <form onSubmit={changeName}>
-        <input type='text'  value={newName} onChange={(e)=> setNewName(e.target.value)} placeholder='add a name'></input>
+        <input 
+          type='text'  
+          value={newName} 
+          onChange={(e)=> setNewName(e.target.value)} 
+          placeholder='add a name'>
+        </input>
         <button type='submit'>Add</button>
       </form>
       </>
